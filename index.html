@@ -268,25 +268,13 @@
                     </div>
                 </div>
 
-                <!-- Recent Submissions -->
-                <div class="bg-white p-6 rounded-xl shadow-lg border border-blue-100">
-                    <h3 class="text-lg font-bold text-blue-primary mb-4">📝 Pengajuan Terbaru</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-sm">
-                            <thead>
-                                <tr class="bg-blue-50 text-blue-primary">
-                                    <th class="text-left p-3 rounded-l-lg">Tanggal</th>
-                                    <th class="text-left p-3">Nama</th>
-                                    <th class="text-left p-3">Jabatan</th>
-                                    <th class="text-left p-3">Total Nilai</th>
-                                    <th class="text-left p-3 rounded-r-lg">Urgensi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="recent-submissions">
-                                <!-- Data akan diisi dengan JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
+                <!-- View Spreadsheet Button -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-blue-100 text-center">
+                    <h3 class="text-lg font-bold text-blue-primary mb-4">📊 Data Lengkap Pengajuan</h3>
+                    <p class="text-gray-600 mb-6">Lihat semua data pengajuan dalam format spreadsheet lengkap</p>
+                    <button id="lihat-spreadsheet" class="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        📋 Buka Spreadsheet
+                    </button>
                 </div>
             </div>
         </div>
@@ -538,8 +526,7 @@
             // Buat chart jabatan
             buatChartJabatan(jabatanCount, totalPengajuan);
 
-            // Tampilkan pengajuan terbaru
-            tampilkanPengajuanTerbaru(data.slice(-10).reverse());
+
         }
 
         // Fungsi untuk membuat chart urgensi
@@ -614,40 +601,10 @@
             });
         }
 
-        // Fungsi untuk menampilkan pengajuan terbaru
-        function tampilkanPengajuanTerbaru(data) {
-            const tbody = document.getElementById('recent-submissions');
-            tbody.innerHTML = '';
-
-            data.forEach(row => {
-                const tr = document.createElement('tr');
-                tr.className = 'border-b border-gray-100 hover:bg-gray-50';
-
-                const tanggal = row['Timestamp'] || '';
-                const nama = row['Nama Lengkap'] || '';
-                const jabatan = row['Jabatan'] || '';
-                const totalNilai = row['Grand Total'] || row['Total Keseluruhan'] || '0';
-                const urgensi = row['Tingkat Urgensi'] || '';
-
-                const urgensiColors = {
-                    'sangat-mendesak': 'bg-red-100 text-red-800',
-                    'perlu': 'bg-yellow-100 text-yellow-800',
-                    'tidak-mendesak': 'bg-green-100 text-green-800'
-                };
-
-                tr.innerHTML = `
-                    <td class="p-3">${new Date(tanggal).toLocaleDateString('id-ID')}</td>
-                    <td class="p-3 font-medium">${nama}</td>
-                    <td class="p-3">${jabatan}</td>
-                    <td class="p-3 font-semibold">${totalNilai}</td>
-                    <td class="p-3">
-                        <span class="px-2 py-1 rounded-full text-xs font-medium ${urgensiColors[urgensi] || 'bg-gray-100 text-gray-800'}">
-                            ${urgensi}
-                        </span>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
+        // Fungsi untuk membuka spreadsheet
+        function bukaSpreadsheet() {
+            const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/1tiaqGujnNqrfGEM0oQW4hNkW3R2NByd_rfj_L7iMpok/edit?usp=sharing';
+            window.open(SPREADSHEET_URL, '_blank');
         }
 
         // Fungsi untuk kembali ke form
@@ -671,6 +628,9 @@
 
             // Event listener untuk tombol Kembali ke Form
             document.getElementById('kembali-form').addEventListener('click', kembaliKeForm);
+
+            // Event listener untuk tombol Lihat Spreadsheet
+            document.getElementById('lihat-spreadsheet').addEventListener('click', bukaSpreadsheet);
 
             // Handle form submission
             document.querySelector('form').addEventListener('submit', async function(e) {
@@ -738,5 +698,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97fd1a10b0945e3c',t:'MTc1Nzk5MTUwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'980e526575570d49',t:'MTc1ODE3MjA2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
